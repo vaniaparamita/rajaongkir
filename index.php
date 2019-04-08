@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+r<!DOCTYPE html>
 <html long="en">
 <head>
     <meta charset="UTF-8">
@@ -32,26 +32,23 @@
 
     curl_close($curl);
 
-    if ($err) {
-    echo "cURL Error #:" . $err;
-}   else {
-//   echo $response;
-}
-echo "<label>Provinsi Tujuan</label><br>";
-echo "<select name='provinsi' id='provinsi'>";
-echo "<option>Pilih Provinsi Tujuan</option>";
-$data = json_decode($response, true);
-for ($i=0; $i < count($data['rajaongkir']['results']); $i++) {
-    echo "<option value='".$data['rajaongkir']['results'][$i]['province']."'>".$data
-    ['rajaongkir']['results'][$i]['province']."
-    </option>";
- }
- echo "</select><br><br>";
+    echo "<label>Provinsi Tujuan</label><br>";
+    echo "<select name='provinsi' id='provinsi'>";
+    echo "<option>Pilih Provinsi Tujuan</option>";
+    $data = json_decode($response, true);
+        for ($i=0; $i < count($data['rajaongkir']['results']); $i++) {
+            echo "<option value='".$data['rajaongkir']['results'][$i]['province']."'>".$data
+                ['rajaongkir']['results'][$i]['province']."
+                </option>";
+        }
+    echo "</select><br><br>";
  
- echo "<br><br><br>";
- $curl = curl_init();
+    echo "<br><br><br>";
 
-  curl_setopt_array($curl, array(
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
     CURLOPT_URL => "https://api.rajaongkir.com/starter/city",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
@@ -61,17 +58,23 @@ for ($i=0; $i < count($data['rajaongkir']['results']); $i++) {
     CURLOPT_CUSTOMREQUEST => "GET",
     CURLOPT_HTTPHEADER => array(
       "key: $api_key"
-    ),
-   ));
-    echo "<label>Kota Asal</label><br>";
-    echo "<select>";
-    echo "<option>Pilih Kota Asal</option>";
-    for ($i=0; $i < count($data['rajaongkir']['results']); $i++) {
-        echo "<option value='".$data['rajaongkir']['results'][$i]['city_id']."'>".$data
-        ['rajaongkir']['results'][$i]['city_name']."
-        </option>";
-     }
-     echo "</select><br><br>";
-?>     
+        ),
+    ));
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+   
+   echo "<label>Kota Asal</label><br>";
+   echo "<select>";
+   $data = json_decode($response, true);
+   echo "<option>Pilih Kota Asal</option>";
+   for ($i=0; $i < count($data['rajaongkir']['results']); $i++) { 
+           echo "<option value='".$data['rajaongkir']['results'][$i]['city_id']."'>"
+           .$data['rajaongkir']['results'][$i]['city_name']."
+           </option>";
+   }        
+   echo "</select><br><br><br>";
+?>
+
 </body>
 </html>
